@@ -14,12 +14,9 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
 
   const menuItems = [
     { id: "dashboard", icon: "📊", label: "Dashboard", href: "/dashboard" },
-    { id: "properties", icon: "🏠", label: "Properties", href: "/properties" },
     { id: "users", icon: "👥", label: "Users", href: "/users" },
-    { id: "bookings", icon: "📅", label: "Bookings", href: "/bookings" },
-    { id: "analytics", icon: "📈", label: "Analytics", href: "/analytics" },
-    { id: "messages", icon: "💬", label: "Messages", href: "/messages" },
-    { id: "settings", icon: "⚙️", label: "Settings", href: "/settings" },
+    { id: "plan-management", icon: "📋", label: "Plan Management", href: "/plan" },
+    { id: "profile", icon: "👤", label: "Profile", href: "/profile" },
   ];
 
   return (

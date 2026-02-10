@@ -1,14 +1,28 @@
 "use client";
 
-import React, { useState, useRef, KeyboardEvent } from "react";
+import React, { useState, useRef, KeyboardEvent, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useVerifyOTPHandler } from "@/models/Auth/Auth";
 
 const VerifyOTP: React.FC = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const [isLoading, setIsLoading] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [email, setEmail] = useState("");
+
   const router = useRouter();
+
+  const { data } = history?.state || {};
+
+  useEffect(() => {
+    if (data === "" || data === undefined || data === null) {
+      return router.push("/resetpassword");
+    } else {
+      setEmail(data?.identifier);
+    }
+  }, []);
+
+  console.log(email);
 
   const handleChange = (index: number, value: string) => {
     if (value.length > 1) return;
@@ -29,6 +43,8 @@ const VerifyOTP: React.FC = () => {
     }
   };
 
+  const { VerifyOTPHandler, isLoading } = useVerifyOTPHandler();
+
   const handleVerifyOTP = async (e: React.FormEvent) => {
     e.preventDefault();
     const otpCode = otp.join("");
@@ -38,16 +54,7 @@ const VerifyOTP: React.FC = () => {
       return;
     }
 
-    setIsLoading(true);
-
-    // Add your OTP verification logic here
-    console.log("Verify OTP:", otpCode);
-
-    setTimeout(() => {
-      setIsLoading(false);
-      router.push("/newpassword");
-      // Navigate to new password screen
-    }, 1000);
+    VerifyOTPHandler({ identifier: email, otp: otpCode });
   };
 
   const handleResendCode = () => {
@@ -95,7 +102,11 @@ const VerifyOTP: React.FC = () => {
             ))}
           </div>
 
-          <button type="submit" className="bg-primary text-white border-none rounded-xl py-4 text-base font-bold cursor-pointer transition-all mt-2.5 hover:bg-opacity-90 disabled:opacity-70" disabled={isLoading}>
+          <button
+            type="submit"
+            className="bg-primary text-white border-none rounded-xl py-4 text-base font-bold cursor-pointer transition-all mt-2.5 hover:bg-opacity-90 disabled:opacity-70"
+            disabled={isLoading}
+          >
             {isLoading ? "Verifying..." : "Verify Code"}
           </button>
 

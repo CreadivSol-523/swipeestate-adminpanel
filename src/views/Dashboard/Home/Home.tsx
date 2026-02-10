@@ -1,6 +1,7 @@
 "use client";
 
 import DashboardLayout from "@/layouts/DashboardLayout";
+import { cookiesData, UserData } from "@/utils/Storage/Storage";
 import React from "react";
 
 const Home: React.FC = () => {
@@ -101,6 +102,8 @@ const Home: React.FC = () => {
     },
   ];
 
+  console.log(UserData);
+
   return (
     <DashboardLayout>
       {/* Page Header */}
@@ -145,7 +148,11 @@ const Home: React.FC = () => {
                 </div>
                 <div className="text-right">
                   <p className="font-bold text-primary">{property.price}</p>
-                  <span className={`text-xs px-2 py-1 rounded-full ${property.status === "Active" ? "bg-green-100 text-green-600" : property.status === "Pending" ? "bg-yellow-100 text-yellow-600" : "bg-gray-200 text-gray-600"}`}>{property.status}</span>
+                  <span
+                    className={`text-xs px-2 py-1 rounded-full ${property.status === "Active" ? "bg-green-100 text-green-600" : property.status === "Pending" ? "bg-yellow-100 text-yellow-600" : "bg-gray-200 text-gray-600"}`}
+                  >
+                    {property.status}
+                  </span>
                 </div>
               </div>
             ))}

@@ -3,24 +3,21 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useForgotPassHandler } from "@/models/Auth/Auth";
 
 const ResetPassword: React.FC = () => {
   const [email, setEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  const { ForgotPassword, isLoading } = useForgotPassHandler();
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+
+    ForgotPassword({ identifier: email });
 
     // Add your reset password logic here
     console.log("Reset password for:", email);
-
-    setTimeout(() => {
-      setIsLoading(false);
-      // Navigate to verify OTP screen
-      router.push("/verifyotp");
-    }, 1000);
   };
 
   return (
@@ -47,11 +44,22 @@ const ResetPassword: React.FC = () => {
             <label className="text-sm font-semibold text-black">Email</label>
             <div className="relative flex items-center">
               <span className="absolute left-4 text-lg z-10">📧</span>
-              <input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full py-3.5 px-4 pl-12 text-[15px] border border-gray-200 rounded-xl outline-none transition-all text-textColor focus:border-primary" required />
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full py-3.5 px-4 pl-12 text-[15px] border border-gray-200 rounded-xl outline-none transition-all text-textColor focus:border-primary"
+                required
+              />
             </div>
           </div>
 
-          <button type="submit" className="bg-primary text-white border-none rounded-xl py-4 text-base font-bold cursor-pointer transition-all mt-2.5 hover:bg-opacity-90 disabled:opacity-70" disabled={isLoading}>
+          <button
+            type="submit"
+            className="bg-primary text-white border-none rounded-xl py-4 text-base font-bold cursor-pointer transition-all mt-2.5 hover:bg-opacity-90 disabled:opacity-70"
+            disabled={isLoading}
+          >
             {isLoading ? "Sending..." : "Send Reset Code"}
           </button>
 

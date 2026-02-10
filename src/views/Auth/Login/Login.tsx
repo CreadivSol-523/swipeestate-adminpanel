@@ -3,27 +3,21 @@
 import React, { use, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useLoginHandler } from "@/models/Auth/Auth";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
+  const { Login, isLoading } = useLoginHandler();
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    // Add your login logic here
-    console.log("Login:", { email, password });
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-
-    router.push("/dashboard");
+    Login({ identifier: email, password });
   };
 
   return (
@@ -49,7 +43,14 @@ const Login: React.FC = () => {
             <label className="text-sm font-semibold text-black">Email</label>
             <div className="relative flex items-center">
               <span className="absolute left-4 text-lg z-10">📧</span>
-              <input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full py-3.5 px-4 pl-12 text-[15px] border border-gray-200 rounded-xl outline-none transition-all text-textColor focus:border-primary" required />
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full py-3.5 px-4 pl-12 text-[15px] border border-gray-200 rounded-xl outline-none transition-all text-textColor focus:border-primary"
+                required
+              />
             </div>
           </div>
 
@@ -57,7 +58,14 @@ const Login: React.FC = () => {
             <label className="text-sm font-semibold text-black">Password</label>
             <div className="relative flex items-center">
               <span className="absolute left-4 text-lg z-10">🔒</span>
-              <input type={showPassword ? "text" : "password"} placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full py-3.5 px-4 pl-12 text-[15px] border border-gray-200 rounded-xl outline-none transition-all text-textColor focus:border-primary" required />
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full py-3.5 px-4 pl-12 text-[15px] border border-gray-200 rounded-xl outline-none transition-all text-textColor focus:border-primary"
+                required
+              />
               <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 bg-transparent border-none cursor-pointer text-lg p-1">
                 {showPassword ? "🙈" : "👁️"}
               </button>
@@ -70,7 +78,11 @@ const Login: React.FC = () => {
             </Link>
           </div>
 
-          <button type="submit" className="bg-primary text-white border-none rounded-xl py-4 text-base font-bold cursor-pointer transition-all mt-2.5 hover:bg-opacity-90 disabled:opacity-70" disabled={isLoading}>
+          <button
+            type="submit"
+            className="bg-primary text-white border-none rounded-xl py-4 text-base font-bold cursor-pointer transition-all mt-2.5 hover:bg-opacity-90 disabled:opacity-70"
+            disabled={isLoading}
+          >
             {isLoading ? "Loading..." : "Login"}
           </button>
         </form>

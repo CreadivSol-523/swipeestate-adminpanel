@@ -1,37 +1,46 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useChangePasswordHandler } from "@/models/Auth/Auth";
 
 const NewPassword: React.FC = () => {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [data, setData] = useState({
+    otp: "",
+    password: "",
+    confirmPassword: "",
+    identifier: "",
+  });
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const { password, confirmPassword } = data;
+
+  const handleFields = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+  console.log(data);
+  const router = useRouter();
+
+  const { data: historyData } = history?.state || {};
+  const { identifier, otp } = historyData || {};
+
+  useEffect(() => {
+    const ifEmailNotExist = identifier === "" || identifier === undefined || identifier === null;
+    const ifOtpNotExist = otp === "" || otp === undefined || otp === null;
+    if (ifOtpNotExist || ifEmailNotExist) {
+      return router.push("/resetpassword");
+    } else {
+      setData((prev) => ({ ...prev, identifier, otp }));
+    }
+  }, []);
+
+  const { ChangePasswordHandler, isLoading } = useChangePasswordHandler();
 
   const handleSetNewPassword = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
-
-    if (password.length < 8) {
-      alert("Password must be at least 8 characters long");
-      return;
-    }
-
-    setIsLoading(true);
-
-    // Add your password reset logic here
-    console.log("New password set:", password);
-
-    setTimeout(() => {
-      setIsLoading(false);
-      // Navigate to login screen
-    }, 1000);
+    ChangePasswordHandler({ confirmPassword: confirmPassword, identifier: data.identifier, otp: data.otp, newPassword: password });
   };
 
   return (
@@ -58,7 +67,16 @@ const NewPassword: React.FC = () => {
             <label className="text-sm font-semibold text-black">New Password</label>
             <div className="relative flex items-center">
               <span className="absolute left-4 text-lg z-10">🔒</span>
-              <input type={showPassword ? "text" : "password"} placeholder="Enter new password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full py-3.5 px-4 pl-12 text-[15px] border border-gray-200 rounded-xl outline-none transition-all text-textColor focus:border-primary" required minLength={8} />
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter new password"
+                value={password}
+                onChange={handleFields}
+                className="w-full py-3.5 px-4 pl-12 text-[15px] border border-gray-200 rounded-xl outline-none transition-all text-textColor focus:border-primary"
+                required
+                // minLength={8}
+                name="password"
+              />
               <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 bg-transparent border-none cursor-pointer text-lg p-1">
                 {showPassword ? "🙈" : "👁️"}
               </button>
@@ -69,7 +87,16 @@ const NewPassword: React.FC = () => {
             <label className="text-sm font-semibold text-black">Confirm Password</label>
             <div className="relative flex items-center">
               <span className="absolute left-4 text-lg z-10">🔒</span>
-              <input type={showConfirmPassword ? "text" : "password"} placeholder="Confirm new password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="w-full py-3.5 px-4 pl-12 text-[15px] border border-gray-200 rounded-xl outline-none transition-all text-textColor focus:border-primary" required minLength={8} />
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="Confirm new password"
+                value={confirmPassword}
+                onChange={handleFields}
+                className="w-full py-3.5 px-4 pl-12 text-[15px] border border-gray-200 rounded-xl outline-none transition-all text-textColor focus:border-primary"
+                required
+                // minLength={8}
+                name="confirmPassword"
+              />
               <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-4 bg-transparent border-none cursor-pointer text-lg p-1">
                 {showConfirmPassword ? "🙈" : "👁️"}
               </button>
@@ -86,7 +113,11 @@ const NewPassword: React.FC = () => {
             </ul>
           </div>
 
-          <button type="submit" className="bg-primary text-white border-none rounded-xl py-4 text-base font-bold cursor-pointer transition-all mt-2.5 hover:bg-opacity-90 disabled:opacity-70" disabled={isLoading}>
+          <button
+            type="submit"
+            className="bg-primary text-white border-none rounded-xl py-4 text-base font-bold cursor-pointer transition-all mt-2.5 hover:bg-opacity-90 disabled:opacity-70"
+            disabled={isLoading}
+          >
             {isLoading ? "Resetting..." : "Reset Password"}
           </button>
 

@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { X } from "lucide-react";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import Table from "@/components/Table/Table";
+import Button from "@/components/Button/Button";
+import { useRouter } from "next/navigation";
 
 interface User {
   _id: string;
@@ -11,6 +13,7 @@ interface User {
   email: string;
   phone: string;
   role: string;
+  apartment: string;
   status: string;
   joinedDate: string;
   properties: number;
@@ -26,6 +29,7 @@ const User: React.FC = () => {
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [deleteUserId, setDeleteUserId] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   // Sample data - Replace with your API call
   const usersData: User[] = [
@@ -35,6 +39,7 @@ const User: React.FC = () => {
       email: "john.doe@example.com",
       phone: "+1 234 567 8900",
       role: "Agent",
+      apartment: "Agent",
       status: "Active",
       joinedDate: "2024-01-15",
       properties: 12,
@@ -45,6 +50,7 @@ const User: React.FC = () => {
       email: "sarah.smith@example.com",
       phone: "+1 234 567 8901",
       role: "Buyer",
+      apartment: "Buyer",
       status: "Active",
       joinedDate: "2024-02-20",
       properties: 3,
@@ -55,6 +61,7 @@ const User: React.FC = () => {
       email: "mike.j@example.com",
       phone: "+1 234 567 8902",
       role: "Seller",
+      apartment: "Seller",
       status: "Inactive",
       joinedDate: "2024-01-10",
       properties: 8,
@@ -65,6 +72,7 @@ const User: React.FC = () => {
       email: "emily.d@example.com",
       phone: "+1 234 567 8903",
       role: "Agent",
+      apartment: "Agent",
       status: "Active",
       joinedDate: "2024-03-05",
       properties: 15,
@@ -75,6 +83,7 @@ const User: React.FC = () => {
       email: "david.w@example.com",
       phone: "+1 234 567 8904",
       role: "Buyer",
+      apartment: "Buyer",
       status: "Active",
       joinedDate: "2024-02-12",
       properties: 2,
@@ -111,6 +120,19 @@ const User: React.FC = () => {
       header: "Role",
       select: ["Agent", "Buyer", "Seller"],
       displayName: "All Roles",
+    },
+    {
+      key: "apartment",
+      header: "Apartment",
+      render: (item: any) => {
+        return (
+          item === "Agent" && (
+            <div className="flex items-center justify-center">
+              <Button className="bg-primary" name={"View"} onClick={() => router.push(`/users/apartments/${item}`)} />
+            </div>
+          )
+        );
+      },
     },
     {
       key: "status",

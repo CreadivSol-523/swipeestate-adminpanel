@@ -238,7 +238,7 @@ const Table = <T extends Record<string, any>>({
   }, [data, filterObject]);
 
   return (
-    <div className={`overflow-x-auto  ${tableName ? "py-6" : "py-2"} rounded-sm flex shadow-sm flex-col border-2 border-gray-300 bg-transparent dark:bg-cardBG`} style={{ maxWidth: "100%" }}>
+    <div className={`overflow-x-auto  ${tableName ? "py-6" : "py-2"} rounded-2xl! flex shadow-sm flex-col  bg-white dark:bg-cardBG`} style={{ maxWidth: "100%" }}>
       <div className="flex px-6 justify-between ">
         {tableName && <h3 className="text-lg! text-black font-medium!">{tableName}</h3>}
         <div className="flex gap-2 items-center">
