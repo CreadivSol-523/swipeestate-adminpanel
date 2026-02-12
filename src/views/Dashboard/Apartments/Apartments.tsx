@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Bed, Bath, Square, MapPin, Search, Filter } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const colors = {
   PrimaryColor: "#38B6FF",
@@ -289,9 +290,11 @@ export default function Apartments() {
             >
               {/* Image */}
               <div style={{ position: "relative", height: "220px", overflow: "hidden" }}>
-                <img
+                <Image
                   src={apartment.image}
                   alt={apartment.title}
+                  width={500}
+                  height={500}
                   style={{
                     width: "100%",
                     height: "100%",

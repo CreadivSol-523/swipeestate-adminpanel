@@ -15,7 +15,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const menuItems = [
     { id: "dashboard", icon: "📊", label: "Dashboard", href: "/dashboard" },
     { id: "users", icon: "👥", label: "Users", href: "/users" },
-    { id: "plan-management", icon: "📋", label: "Plan Management", href: "/plan" },
+    { id: "plan-management", icon: "📋", label: "Plan Management", href: "/plan-management" },
     { id: "profile", icon: "👤", label: "Profile", href: "/profile" },
   ];
 
@@ -71,7 +71,11 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       <aside className={`fixed top-16 left-0 h-[calc(100vh-4rem)] bg-white shadow-lg transition-all duration-300 z-30 ${isSidebarOpen ? "w-64" : "w-0 xl:w-20"} overflow-hidden`}>
         <nav className="p-4 space-y-2">
           {menuItems.map((item) => (
-            <Link key={item.id} href={item.href} className={`flex items-center gap-4 px-4 py-3 rounded-lg transition-all cursor-pointer ${params.replace("/", "") === item.id ? "bg-primary text-white" : "text-textColor hover:bg-secondary"}`}>
+            <Link
+              key={item.id}
+              href={item.href}
+              className={`flex items-center gap-4 px-4 py-3 rounded-lg transition-all cursor-pointer ${params.replace("/", "") === item.id ? "bg-primary text-white" : "text-textColor hover:bg-secondary"}`}
+            >
               <span className="text-2xl min-w-[24px]">{item.icon}</span>
               <span className={`font-medium ${isSidebarOpen ? "block" : "hidden lg:hidden"}`}>{item.label}</span>
             </Link>

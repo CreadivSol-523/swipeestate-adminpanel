@@ -55,8 +55,15 @@ const sampleApartment: Apartment = {
   amenities: ["Swimming Pool", "Fitness Center", "Concierge Service", "24/7 Security", "Rooftop Terrace", "Pet Friendly", "In-unit Laundry", "Central AC", "High-speed Internet", "Storage Space"],
   availability: "Available",
   image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=800&fit=crop",
-  featuredImages: ["https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=800&fit=crop", "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200&h=800&fit=crop", "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=800&fit=crop", "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&h=800&fit=crop", "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&h=800&fit=crop"],
-  description: "Experience luxury living at its finest in this stunning 3-bedroom penthouse located in the heart of Manhattan. This magnificent residence offers breathtaking panoramic city views, floor-to-ceiling windows, and the finest finishes throughout. The open-concept living space features a gourmet kitchen with top-of-the-line appliances, spacious bedrooms with en-suite bathrooms, and a private terrace perfect for entertaining. Building amenities include a state-of-the-art fitness center, swimming pool, 24/7 concierge, and secure parking. This is a rare opportunity to own a piece of New York City luxury.",
+  featuredImages: [
+    "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=800&fit=crop",
+    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200&h=800&fit=crop",
+    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=800&fit=crop",
+    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&h=800&fit=crop",
+    "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&h=800&fit=crop",
+  ],
+  description:
+    "Experience luxury living at its finest in this stunning 3-bedroom penthouse located in the heart of Manhattan. This magnificent residence offers breathtaking panoramic city views, floor-to-ceiling windows, and the finest finishes throughout. The open-concept living space features a gourmet kitchen with top-of-the-line appliances, spacious bedrooms with en-suite bathrooms, and a private terrace perfect for entertaining. Building amenities include a state-of-the-art fitness center, swimming pool, 24/7 concierge, and secure parking. This is a rare opportunity to own a piece of New York City luxury.",
   createdAt: "2024-01-15T10:30:00.000Z",
   updatedAt: "2024-02-01T14:20:00.000Z",
   balcony: true,
@@ -185,8 +192,8 @@ export default function SingleApartment() {
             <Image
               src={apartment.featuredImages[selectedImage]}
               alt={apartment.title}
-              width={200}
-              height={200}
+              width={1000}
+              height={1000}
               style={{
                 width: "100%",
                 height: "100%",
@@ -251,8 +258,10 @@ export default function SingleApartment() {
                   transition: "all 0.3s",
                 }}
               >
-                <img
+                <Image
                   src={img}
+                  width={200}
+                  height={200}
                   alt={`View ${index + 1}`}
                   style={{
                     width: "100%",

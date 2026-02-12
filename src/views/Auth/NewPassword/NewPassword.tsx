@@ -113,11 +113,7 @@ const NewPassword: React.FC = () => {
             </ul>
           </div>
 
-          <button
-            type="submit"
-            className="bg-primary text-white border-none rounded-xl py-4 text-base font-bold cursor-pointer transition-all mt-2.5 hover:bg-opacity-90 disabled:opacity-70"
-            disabled={isLoading}
-          >
+          <button type="submit" className="bg-primary text-white border-none rounded-xl py-4 text-base font-bold cursor-pointer transition-all mt-2.5 hover:bg-opacity-90 disabled:opacity-70" disabled={isLoading}>
             {isLoading ? "Resetting..." : "Reset Password"}
           </button>
 
