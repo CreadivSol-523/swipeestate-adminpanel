@@ -119,7 +119,8 @@ const Buyers: React.FC = () => {
 				statusField="status"
 				currentPage={currentPage}
 				setCurrentPage={setCurrentPage}
-				pageLimit={10}
+				pageLimit={6}
+				numberOfPages={BuyerData?.meta?.totalPages ?? 1}
 				dataLength={BuyerData?.meta?.totalItems ?? 0}
 				isLoading={BuyerLoading}
 				loadingLength={5}

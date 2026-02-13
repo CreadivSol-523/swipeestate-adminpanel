@@ -17,6 +17,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({children}) => {
 		// { id: "users", icon: "👥", label: "Users", href: "/users" },
 		{id: "buyers", icon: "👥", label: "Buyers", href: "/buyers"},
 		{id: "sellers", icon: "🏢", label: "Sellers", href: "/sellers"},
+		{id: "properties", icon: "🏠", label: "Properties", href: "/properties"},
 		{id: "plan-management", icon: "📋", label: "Plan Management", href: "/plan-management"},
 		{id: "profile", icon: "👤", label: "Profile", href: "/profile"},
 	];

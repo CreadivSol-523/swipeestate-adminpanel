@@ -6,13 +6,13 @@ const Users = createApi({
 	endpoints: (builder) => ({
 		GetBuyers: builder.query<any, {page: number}>({
 			query: ({page}) => ({
-				url: `/api/get-buyers?page=${page}&limit=10`,
+				url: `/api/get-buyers?page=${page}&limit=6`,
 				method: "GET",
 			}),
 		}),
 		GetSellers: builder.query<any, {page: number}>({
 			query: ({page}) => ({
-				url: `/api/get-sellers?page=${page}&limit=10`,
+				url: `/api/get-sellers?page=${page}&limit=6`,
 				method: "GET",
 			}),
 		}),

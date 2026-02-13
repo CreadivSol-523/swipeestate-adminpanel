@@ -1,11 +1,12 @@
 "use client";
 
 import React, {useState} from "react";
-import {X} from "lucide-react";
+import {Download, X} from "lucide-react";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import Table from "@/components/Table/Table";
 import {useRouter} from "next/navigation";
 import {useGetSellerHandler} from "@/models/Users/Users";
+import {useGetApartmentHandler} from "@/models/Apartment/Apartment";
 
 interface User {
 	_id: string;
@@ -15,7 +16,7 @@ interface User {
 	address: string;
 }
 
-const Sellers: React.FC = () => {
+const Properties: React.FC = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -25,31 +26,91 @@ const Sellers: React.FC = () => {
 	const [deleteUserId, setDeleteUserId] = useState<string>("");
 	const router = useRouter();
 
-	const {SellerData, SellerLoading} = useGetSellerHandler({page: currentPage});
-
+	const {ApartmentData, ApartmentLoading} = useGetApartmentHandler({page: currentPage});
+	console.log(ApartmentData);
 	const columns = [
 		{
-			key: "name",
-			header: "Name",
+			key: "title",
+			header: "Title",
 			type: "text",
-			name: "name",
+			name: "title",
 		},
 		{
-			key: "email",
-			header: "Email",
-			type: "email",
-			name: "email",
-		},
-		{
-			key: "address",
-			header: "Address",
+			key: "location",
+			header: "Location",
 			type: "text",
-			name: "address",
 		},
 		{
-			key: "phone",
-			header: "Phone",
+			key: "price",
+			header: "Price",
+			type: "number",
 		},
+		{
+			key: "bedrooms",
+			header: "Bedrooms",
+			type: "number",
+		},
+		{
+			key: "bathrooms",
+			header: "Bathrooms",
+			type: "number",
+		},
+		{
+			key: "area",
+			header: "Area (sqft)",
+			type: "number",
+		},
+		{
+			key: "furnished",
+			header: "Furnished",
+			type: "text",
+		},
+		{
+			key: "floor",
+			header: "Floor",
+			type: "number",
+		},
+		{
+			key: "parking",
+			header: "Parking",
+			type: "boolean",
+			render: (value: boolean) => (value ? "Yes" : "No"),
+		},
+		{
+			key: "balcony",
+			header: "Balcony",
+			type: "boolean",
+			render: (value: boolean) => (value ? "Yes" : "No"),
+		},
+		{
+			key: "amenities",
+			header: "Amenities",
+			type: "array",
+			render: (value: string[]) => value.join(", "),
+		},
+		{
+			key: "proof_of_ownership",
+			header: "Proof of Ownership",
+			type: "text",
+			render: (value: string) => (
+				<a
+					href={value}
+					target="_blank"
+					rel="noopener noreferrer"
+					className="text-blue-500"
+				>
+					<Download className="w-5 h-5 inline-block mr-1" />
+				</a>
+			),
+		},
+		// {
+		// 	key: "status",
+		// 	header: "Status",
+		// 	type: "text",
+		// 	render: (value: string) => {
+		// 		return <span className={`px-2 py-1 rounded-full text-xs font-semibold ${value === "Active" ? "bg-green-100 text-green-800" : value === "Inactive" ? "bg-red-100 text-red-800" : "bg-yellow-100 text-yellow-800"}`}>{value || "Inactive"}</span>;
+		// 	},
+		// },
 	];
 	const handleViewClick = (user: User) => {
 		setSelectedUser(user);
@@ -88,13 +149,13 @@ const Sellers: React.FC = () => {
 		// Add your save/update API call here
 		handleCloseModal();
 	};
-
+	console.log(ApartmentData);
 	return (
 		<DashboardLayout>
 			{/* Page Header */}
 			<div className="mb-6">
-				<h1 className="text-3xl font-bold text-black mb-2">Seller Management</h1>
-				<p className="text-textColor">Manage all sellers and their information</p>
+				<h1 className="text-3xl font-bold text-black mb-2">Properties Management</h1>
+				<p className="text-textColor">Manage all properties and their information</p>
 			</div>
 
 			{/* Stats Cards */}
@@ -105,33 +166,30 @@ const Sellers: React.FC = () => {
 							<span className="text-2xl">🏢</span>
 						</div>
 					</div>
-					<h3 className="text-gray text-sm mb-1">Total Sellers</h3>
-					<p className="text-2xl font-bold text-black">{SellerData?.meta?.totalItems ?? 0}</p>
+					<h3 className="text-gray text-sm mb-1">Total Properties</h3>
+					<p className="text-2xl font-bold text-black">{ApartmentData?.meta?.totalItems ?? 0}</p>
 				</div>
 			</div>
 
 			{/* Users Table */}
 			<Table
-				tableName="All Sellers"
-				data={SellerData?.users || []}
+				tableName="All Properties"
+				data={ApartmentData?.apartments || []}
 				columns={columns}
 				keyField="_id"
 				statusField="status"
 				currentPage={currentPage}
 				setCurrentPage={setCurrentPage}
 				pageLimit={6}
-				numberOfPages={SellerData?.meta?.totalPages ?? 1}
-				dataLength={SellerData?.meta?.totalItems ?? 0}
-				isLoading={SellerLoading}
+				numberOfPages={ApartmentData?.meta?.totalPages ?? 1}
+				dataLength={ApartmentData?.meta?.totalItems ?? 0}
+				isLoading={ApartmentLoading}
 				loadingLength={5}
 				onViewClick={(user: any) => handleViewClick(user)}
 				onEditClick={(user: any) => handleEditClick(user)}
 				setId={setDeleteUserId}
 				deleteFunctions={() => setIsDeleteMode(true)}
-				actions={true}
-				eye={true}
-				edit={false}
-				trash={false}
+				actions={false}
 			/>
 
 			{/* View/Edit Modal */}
@@ -274,4 +332,4 @@ const Sellers: React.FC = () => {
 	);
 };
 
-export default Sellers;
+export default Properties;
