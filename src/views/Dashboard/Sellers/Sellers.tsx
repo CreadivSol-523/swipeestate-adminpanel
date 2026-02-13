@@ -25,7 +25,7 @@ const Sellers: React.FC = () => {
 	const [deleteUserId, setDeleteUserId] = useState<string>("");
 	const router = useRouter();
 
-	const {SellerData, SellerLoading} = useGetSellerHandler();
+	const {SellerData, SellerLoading} = useGetSellerHandler({page: currentPage});
 
 	const columns = [
 		{

@@ -26,7 +26,7 @@ const Buyers: React.FC = () => {
 	const [deleteUserId, setDeleteUserId] = useState<string>("");
 	const router = useRouter();
 
-	const {BuyerData, BuyerLoading} = useGetBuyerHandler();
+	const {BuyerData, BuyerLoading} = useGetBuyerHandler({page: currentPage});
 
 	const columns = [
 		{

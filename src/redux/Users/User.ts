@@ -4,15 +4,15 @@ const Users = createApi({
 	reducerPath: "Users",
 	baseQuery: fetchBaseQuery({baseUrl: process.env.NEXT_PUBLIC_API}),
 	endpoints: (builder) => ({
-		GetBuyers: builder.query<any, undefined>({
-			query: () => ({
-				url: `/api/get-buyers`,
+		GetBuyers: builder.query<any, {page: number}>({
+			query: ({page}) => ({
+				url: `/api/get-buyers?page=${page}&limit=10`,
 				method: "GET",
 			}),
 		}),
-		GetSellers: builder.query<any, undefined>({
-			query: () => ({
-				url: `/api/get-sellers`,
+		GetSellers: builder.query<any, {page: number}>({
+			query: ({page}) => ({
+				url: `/api/get-sellers?page=${page}&limit=10`,
 				method: "GET",
 			}),
 		}),

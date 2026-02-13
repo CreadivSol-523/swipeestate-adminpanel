@@ -1,8 +1,8 @@
 import {ShowErrorToast} from "@/components/Toast/Toast";
 import {useGetBuyersQuery, useGetSellersQuery} from "@/redux/Users/User";
 
-export const useGetBuyerHandler = () => {
-	const buyer = useGetBuyersQuery(undefined);
+export const useGetBuyerHandler = ({page}: {page: number}) => {
+	const buyer = useGetBuyersQuery({page});
 
 	const BuyerData = buyer?.data;
 	const BuyerLoading = buyer.isLoading;
@@ -21,8 +21,8 @@ export const useGetBuyerHandler = () => {
 	};
 };
 
-export const useGetSellerHandler = () => {
-	const seller = useGetSellersQuery(undefined);
+export const useGetSellerHandler = ({page}: {page: number}) => {
+	const seller = useGetSellersQuery({page});
 
 	const SellerData = seller?.data;
 	const SellerLoading = seller.isLoading;
